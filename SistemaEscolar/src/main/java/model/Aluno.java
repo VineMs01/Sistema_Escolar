@@ -72,6 +72,10 @@ public class Aluno {
 
     @Override
     public String toString() {
+
+        DateTimeFormatter formatter =
+                DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
         return String.format(
                 "Aluno: id=%d - nome=%s - cpf=%s - email=%s - nascimento=%s - telefone=%s",
                 id, nome, cpf, email, data_nascimento, telefone
