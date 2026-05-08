@@ -16,7 +16,7 @@ public class sqlConn {
 
     public static void testConnection() {
         try (Connection conn = getConnection()){
-            System.out.println("Conexaão foi estabelecida com sucesso!" +conn);
+            System.out.println("Conexão foi estabelecida com sucesso!" +conn);
         } catch (SQLException e) {
             System.out.println("Falha na conexao " +e.getMessage());
             System.out.println("Verifique:");
