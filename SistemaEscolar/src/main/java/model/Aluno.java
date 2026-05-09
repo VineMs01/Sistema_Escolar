@@ -1,5 +1,6 @@
 package model;
 
+import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
 
 public class Aluno {
@@ -29,6 +30,8 @@ public class Aluno {
         this.data_nascimento = data_nascimento;
         this.telefone = telefone;
     }
+
+    public int getId() { return id; }
 
     public String getNome() {
         return nome;
@@ -77,7 +80,14 @@ public class Aluno {
                 DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         return String.format(
-                "Aluno: id=%d - nome=%s - cpf=%s - email=%s - nascimento=%s - telefone=%s",
+                "==============================\n" +
+                        "ID: %d\n" +
+                        "Nome: %s\n" +
+                        "CPF: %s\n" +
+                        "Email: %s\n" +
+                        "Nascimento: %s\n" +
+                        "Telefone: %s\n" +
+                        "==============================",
                 id, nome, cpf, email, data_nascimento, telefone
         );
     }

@@ -18,5 +18,6 @@ public interface IAlunoDAO {
     //D - Delete
     void excluirAluno(int id);
 
+    //GetById
     Aluno listarPorId(int id);
 }
