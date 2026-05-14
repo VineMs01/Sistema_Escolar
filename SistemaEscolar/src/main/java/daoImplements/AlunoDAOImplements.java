@@ -156,6 +156,45 @@ public class AlunoDAOImplements implements IAlunoDAO {
 
         return aluno;
     }
+    @Override
+    public List<Aluno> listarAlunosPorTurma(int idTurma) {
+
+        String sql = """
+        SELECT a.*
+        FROM aluno a
+        INNER JOIN matricula m
+            ON a.alunoId = m.aluno_id
+        WHERE m.turma_id = ?
+        ORDER BY a.nome ASC
+    """;
+
+        List<Aluno> alunos = new ArrayList<>();
+
+        try (Connection conn = sqlConn.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, idTurma);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                alunos.add(new Aluno(
+                        rs.getInt("alunoId"),
+                        rs.getString("nome"),
+                        rs.getString("cpf"),
+                        rs.getString("email"),
+                        rs.getDate("data_nascimento").toLocalDate(),
+                        rs.getString("telefone")
+                ));
+            }
+
+        } catch (Exception e) {
+            System.err.println("Erro ao listar alunos da turma: " + e.getMessage());
+        }
+
+        return alunos;
+    }
 
 
 }

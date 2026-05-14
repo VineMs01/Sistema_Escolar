@@ -20,4 +20,8 @@ public interface IAlunoDAO {
 
     //GetById
     Aluno listarPorId(int id);
+
+    //GetByClass
+    List<Aluno> listarAlunosPorTurma(int idTurma);
+
 }

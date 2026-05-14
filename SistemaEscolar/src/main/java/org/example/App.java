@@ -1,8 +1,10 @@
 package org.example;
 
 import daoImplements.AlunoDAOImplements;
+import daoImplements.TurmaDAOImplements;
 import database.sqlConn;
 import model.Aluno;
+import model.Turma;
 
 
 import java.time.format.DateTimeFormatter;
@@ -10,18 +12,13 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
-/**
- * Hello world!
- *
- */
-public class App 
-{
-    public static void main( String[] args )
-    {
+public class App {
+    public static void main(String[] args) {
 
         sqlConn.testConnection();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         AlunoDAOImplements alunoDaoMethods = new AlunoDAOImplements();
+        TurmaDAOImplements turmaDaoMethods = new TurmaDAOImplements();
         Scanner read = new Scanner(System.in);
         int opcao;
 
@@ -32,13 +29,14 @@ public class App
             System.out.println("3. Excluir Aluno");
             System.out.println("4. Listar Alunos");
             System.out.println("5. Listar Aluno por id");
+            System.out.println("6. Listar Turmas e Alunos");
             System.out.println("0. Sair do programa");
             System.out.println("Escolha uma opção: ");
 
             opcao = read.nextInt();
             read.nextLine();
 
-            switch (opcao){
+            switch (opcao) {
                 case 1:
                     System.out.println("Cadastrar aluno");
                     System.out.print("Nome: ");
@@ -142,10 +140,10 @@ public class App
 
                     List<Aluno> todosAlunos = alunoDaoMethods.listarTodosAlunos();
 
-                    if (todosAlunos.isEmpty()){
+                    if (todosAlunos.isEmpty()) {
                         System.out.println("Nenhum aluno encontrado");
                     } else {
-                        for (Aluno aluno : todosAlunos){
+                        for (Aluno aluno : todosAlunos) {
                             System.out.println(aluno);
                         }
                     }
@@ -165,9 +163,37 @@ public class App
                         System.out.println("Nenhum aluno encontrado com o ID: " + idBusca);
                     }
                     break;
+                case 6:
+                    System.out.println("Listar Turmas");
+
+                    List<Turma> todasTurmas = turmaDaoMethods.listarTodasTurmas();
+
+                    if (todasTurmas.isEmpty()) {
+                        System.out.println("Nenhuma turma encontrada");
+                    } else {
+                        for (Turma turma : todasTurmas) {
+                            System.out.println(turma);
+                        }
+                        System.out.println("Informe o id da turma para visualizar os alunos: ");
+                        int idInformado = read.nextInt();
+
+                        List<Aluno> alunosTurmaEncontradas = turmaDaoMethods.listarAlunosPorTurmaID(idInformado);
+
+                        if (alunosTurmaEncontradas.isEmpty()) {
+                            System.out.println("Nenhum aluno encontrado nesta turma!");
+                        } else {
+                            System.out.println("Alunos matriculados: ");
+                            for (Aluno aluno : alunosTurmaEncontradas) {
+                                System.out.println(aluno);
+                            }
+                        }
+                    }
+
+                        break;
+
+                    }
 
             }
-
-        } while (opcao != 0);
+            while (opcao != 0) ;
+        }
     }
-}
